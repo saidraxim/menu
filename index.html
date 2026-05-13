@@ -441,6 +441,17 @@ footer{
         <input type="text" id="name" placeholder="Ваше имя или оставьте пустым для анонимного отзыва"
         style="width:100%;padding:15px;margin-bottom:15px;font-size:18px;border-radius:10px;border:1px solid #ccc;">
 
+        <div style="margin-bottom:20px;text-align:left;">
+            <label style="font-size:20px;font-weight:bold;color:#2b1d0e;">Оценка:</label>
+            <div id="stars" style="font-size:35px;color:gold;margin-top:10px;cursor:pointer;user-select:none;">
+                <span onclick="setRating(1)">☆</span>
+                <span onclick="setRating(2)">☆</span>
+                <span onclick="setRating(3)">☆</span>
+                <span onclick="setRating(4)">☆</span>
+                <span onclick="setRating(5)">☆</span>
+            </div>
+        </div>
+
         <textarea id="reviewText" placeholder="Напишите отзыв..."
         style="width:100%;height:140px;padding:15px;font-size:18px;border-radius:10px;border:1px solid #ccc;"></textarea>
 
@@ -475,18 +486,74 @@ footer{
     © 2026 Golden Taste Restaurant
 </footer>
 
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+const SUPABASE_URL = 'https://edgezwpjhkpyuebywrjx.supabase.co';
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkZ2V6d3BqaGtweXVlYnl3cmp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjIzODcsImV4cCI6MjA5NDIzODM4N30.0PAnqhnQhiiFo-CixqfB7e5YTlyFM6npoiSaRlsrO54';
+
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+
+let selectedRating = 0;
+
+function setRating(rating){
+    selectedRating = rating;
+
+    const stars = document.querySelectorAll('#stars span');
+
+    stars.forEach((star,index)=>{
+        if(index < rating){
+            star.innerHTML = '★';
+        }else{
+            star.innerHTML = '☆';
+        }
+    });
+}
 
 function saveReviews(){
     localStorage.setItem('restaurantReviews', document.getElementById('reviewsContainer').innerHTML);
 }
 
-function loadReviews(){
-    const saved = localStorage.getItem('restaurantReviews');
+async function loadReviews(){
 
-    if(saved){
-        document.getElementById('reviewsContainer').innerHTML = saved;
+    const container = document.getElementById('reviewsContainer');
+
+    const { data, error } = await supabaseClient
+    .from('reviews')
+    .select('*')
+    .order('created', { ascending:false });
+
+    if(error){
+        console.log(error);
+        return;
     }
+
+    container.innerHTML = '';
+
+    data.forEach((item)=>{
+
+        const review = document.createElement('div');
+
+        review.style.background = 'white';
+        review.style.padding = '20px';
+        review.style.marginBottom = '20px';
+        review.style.borderRadius = '15px';
+        review.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+        review.style.textAlign = 'left';
+
+        review.innerHTML = `
+            <h3 style="margin-bottom:10px;color:#2b1d0e;">${item.name}</h3>
+            <div style="font-size:26px;color:gold;margin-bottom:10px;">${item.stars}</div>
+            <p style="margin-bottom:15px;font-size:18px;line-height:1.7;">${item.text}</p>
+            <small style="color:gray;">${item.date} • ${item.time}</small>
+        `;
+
+        container.appendChild(review);
+    });
 }
 
 window.onload = loadReviews;
@@ -499,6 +566,12 @@ function addReview(){
 
     let name = nameInput.value.trim();
     const text = textInput.value.trim();
+    const rating = selectedRating;
+
+    if(rating === 0){
+        alert('Поставьте оценку');
+        return;
+    }
 
     if(text === ''){
         alert('Напишите отзыв');
@@ -522,18 +595,40 @@ function addReview(){
     review.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
     review.style.textAlign = 'left';
 
+    const starsDisplay = '★'.repeat(rating) + '☆'.repeat(5-rating);
+
     review.innerHTML = `
         <h3 style="margin-bottom:10px;color:#2b1d0e;">${name}</h3>
+        <div style="font-size:26px;color:gold;margin-bottom:10px;">${starsDisplay}</div>
         <p style="margin-bottom:15px;font-size:18px;line-height:1.7;">${text}</p>
         <small style="color:gray;">${date} • ${time}</small>
     `;
 
-    container.prepend(review);
-
-    saveReviews();
+    supabaseClient
+    .from('reviews')
+    .insert([
+        {
+            name:name,
+            text:text,
+            stars:starsDisplay,
+            rating:rating,
+            date:date,
+            time:time,
+            created:Date.now()
+        }
+    ])
+    .then(()=>{
+        loadReviews();
+    });
 
     nameInput.value = '';
     textInput.value = '';
+
+    selectedRating = 0;
+
+    document.querySelectorAll('#stars span').forEach(star=>{
+        star.innerHTML = '☆';
+    });
 }
 
 const cards = document.querySelectorAll('.food-card');
