@@ -230,6 +230,7 @@ footer{
     <a href="#about">О нас</a>
     <a href="#menu">Меню</a>
     <a href="#contact">Контакты</a>
+    <a href="#reviews">Отзывы</a>
 </div>
 
 <!-- ГЛАВНАЯ -->
@@ -269,6 +270,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=1200&auto=format&fit=crop">
                 <h3>Плов</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">55 000 сум</div>
                 <p>Традиционный узбекский плов</p>
             </summary>
             <div class="food-info">
@@ -280,6 +282,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop">
                 <h3>Самса</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">18 000 сум</div>
                 <p>Хрустящая самса из тандыра</p>
             </summary>
             <div class="food-info">
@@ -291,6 +294,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?q=80&w=1200&auto=format&fit=crop">
                 <h3>Фри</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">25 000 сум</div>
                 <p>Хрустящая картошка фри</p>
             </summary>
             <div class="food-info">
@@ -302,6 +306,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1200&auto=format&fit=crop">
                 <h3>Пицца</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">85 000 сум</div>
                 <p>Сырная пицца</p>
             </summary>
             <div class="food-info">
@@ -313,6 +318,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop">
                 <h3>Бургер</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">45 000 сум</div>
                 <p>Сочный бургер</p>
             </summary>
             <div class="food-info">
@@ -324,6 +330,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?q=80&w=1200&auto=format&fit=crop">
                 <h3>Лагман</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">42 000 сум</div>
                 <p>Горячий лагман</p>
             </summary>
             <div class="food-info">
@@ -335,6 +342,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop">
                 <h3>Шашлык</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">35 000 сум</div>
                 <p>Сочный мясной шашлык</p>
             </summary>
             <div class="food-info">
@@ -349,6 +357,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1617093727343-374698b1b08d?q=80&w=1200&auto=format&fit=crop">
                 <h3>Манты</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">38 000 сум</div>
                 <p>Домашние манты на пару</p>
             </summary>
             <div class="food-info">
@@ -363,6 +372,7 @@ footer{
             <summary>
                 <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1200&auto=format&fit=crop">
                 <h3>Донер</h3>
+                <div style="font-size:22px;color:#c28b00;font-weight:bold;margin-bottom:10px;">30 000 сум</div>
                 <p>Популярный донер кебаб</p>
             </summary>
             <div class="food-info">
@@ -421,6 +431,32 @@ footer{
 
         </section>
 
+<!-- ОТЗЫВЫ -->
+<section id="reviews" style="background:linear-gradient(135deg,#fff7e6,#fffdf7);border-radius:25px;margin:40px auto;max-width:1200px;box-shadow:0 8px 30px rgba(0,0,0,0.1);">
+
+    <h2>⭐ Отзывы клиентов</h2>
+
+    <div class="contact-box" style="max-width:900px;">
+
+        <input type="text" id="name" placeholder="Ваше имя или оставьте пустым для анонимного отзыва"
+        style="width:100%;padding:15px;margin-bottom:15px;font-size:18px;border-radius:10px;border:1px solid #ccc;">
+
+        <textarea id="reviewText" placeholder="Напишите отзыв..."
+        style="width:100%;height:140px;padding:15px;font-size:18px;border-radius:10px;border:1px solid #ccc;"></textarea>
+
+        <button onclick="addReview()"
+        onmouseover="this.style.background='#c28b00'"
+        onmouseout="this.style.background='#2b1d0e'"
+        style="margin-top:15px;padding:14px 25px;font-size:18px;background:#2b1d0e;color:white;border:none;border-radius:10px;cursor:pointer;">
+            Отправить отзыв
+        </button>
+
+    </div>
+
+    <div id="reviewsContainer" style="max-width:900px;margin:40px auto 0;"></div>
+
+</section>
+
 <!-- КОНТАКТЫ -->
 <section id="contact">
 
@@ -440,6 +476,66 @@ footer{
 </footer>
 
 <script>
+
+function saveReviews(){
+    localStorage.setItem('restaurantReviews', document.getElementById('reviewsContainer').innerHTML);
+}
+
+function loadReviews(){
+    const saved = localStorage.getItem('restaurantReviews');
+
+    if(saved){
+        document.getElementById('reviewsContainer').innerHTML = saved;
+    }
+}
+
+window.onload = loadReviews;
+
+function addReview(){
+
+    const nameInput = document.getElementById('name');
+    const textInput = document.getElementById('reviewText');
+    const container = document.getElementById('reviewsContainer');
+
+    let name = nameInput.value.trim();
+    const text = textInput.value.trim();
+
+    if(text === ''){
+        alert('Напишите отзыв');
+        return;
+    }
+
+    if(name === ''){
+        name = 'Аноним';
+    }
+
+    const now = new Date();
+    const date = now.toLocaleDateString();
+    const time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+
+    const review = document.createElement('div');
+
+    review.style.background = 'white';
+    review.style.padding = '20px';
+    review.style.marginBottom = '20px';
+    review.style.borderRadius = '15px';
+    review.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+    review.style.textAlign = 'left';
+
+    review.innerHTML = `
+        <h3 style="margin-bottom:10px;color:#2b1d0e;">${name}</h3>
+        <p style="margin-bottom:15px;font-size:18px;line-height:1.7;">${text}</p>
+        <small style="color:gray;">${date} • ${time}</small>
+    `;
+
+    container.prepend(review);
+
+    saveReviews();
+
+    nameInput.value = '';
+    textInput.value = '';
+}
+
 const cards = document.querySelectorAll('.food-card');
 
 cards.forEach(card => {
